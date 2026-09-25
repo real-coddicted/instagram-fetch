@@ -1,0 +1,26 @@
+# Environment Variables (Crucial to keep secret!)
+.env
+.env.local
+.env.*.local
+
+# Node modules
+node_modules/
+frontend/node_modules/
+
+# Python Virtual Environments & Caches
+venv/
+.venv/
+backend/.venv/
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+
+# Build artifacts
+dist/
+build/
+*.egg-info/
+
+# Logs and OS files
+*.log
+.DS_Store
+Thumbs.db
