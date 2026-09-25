@@ -1,0 +1,522 @@
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap");
+
+:root {
+  --bg-color: #08070b;
+  --surface: rgba(255, 255, 255, 0.04);
+  --surface-strong: rgba(255, 255, 255, 0.07);
+  --text-main: #f6f5f8;
+  --text-muted: #a4a2ad;
+  --line: rgba(255, 255, 255, 0.09);
+  --accent: #dc2743;
+  --accent-soft: rgba(220, 39, 67, 0.35);
+
+  /* kept for compatibility with any inline use */
+  --glass-bg: var(--surface);
+  --glass-border: var(--line);
+  --glass-hover: var(--surface-strong);
+  --text-muted-legacy: var(--text-muted);
+
+  --ig-gradient: linear-gradient(
+    45deg,
+    #f09433 0%,
+    #e6683c 25%,
+    #dc2743 50%,
+    #cc2366 75%,
+    #bc1888 100%
+  );
+  --ig-gradient-hover: linear-gradient(
+    45deg,
+    #f09433 10%,
+    #e6683c 35%,
+    #dc2743 60%,
+    #cc2366 85%,
+    #bc1888 100%
+  );
+
+  --radius-lg: 28px;
+  --radius-md: 16px;
+  --radius-sm: 12px;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family:
+    "Outfit",
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    sans-serif;
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  background-color: var(--bg-color);
+  background-image:
+    radial-gradient(
+      60rem 40rem at 10% -10%,
+      rgba(240, 148, 51, 0.1),
+      transparent 60%
+    ),
+    radial-gradient(
+      50rem 40rem at 100% 10%,
+      rgba(188, 24, 136, 0.14),
+      transparent 60%
+    ),
+    radial-gradient(
+      40rem 30rem at 50% 110%,
+      rgba(220, 39, 67, 0.1),
+      transparent 60%
+    );
+  background-attachment: fixed;
+  color: var(--text-main);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 3.5rem 1rem 4rem;
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ---------- Header ---------- */
+header {
+  text-align: center;
+  margin-bottom: 2.25rem;
+  animation: fadeInDown 0.7s var(--ease);
+}
+
+h1 {
+  font-size: clamp(2.2rem, 6vw, 3.4rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+  background: var(--ig-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0.75rem;
+}
+
+p.subtitle {
+  color: var(--text-muted);
+  font-size: 1.05rem;
+  font-weight: 300;
+  max-width: 34ch;
+  margin: 0 auto;
+  line-height: 1.5;
+}
+
+/* ---------- Tabs ---------- */
+.tabs {
+  display: flex;
+  gap: 0.25rem;
+  margin-bottom: 1.75rem;
+  background: rgba(0, 0, 0, 0.35);
+  padding: 0.3rem;
+  border-radius: 99px;
+  border: 1px solid var(--line);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.tab-btn {
+  background: transparent;
+  color: var(--text-muted);
+  border: none;
+  padding: 0.65rem 1.6rem;
+  border-radius: 99px;
+  font-weight: 500;
+  font-size: 0.95rem;
+  cursor: pointer;
+  box-shadow: none;
+  transition:
+    color 0.25s ease,
+    background 0.25s ease;
+}
+
+.tab-btn:hover:not(:disabled) {
+  color: var(--text-main);
+  transform: none;
+  box-shadow: none;
+}
+
+.tab-btn:active:not(:disabled) {
+  transform: none;
+}
+
+.tab-btn.active {
+  background: var(--surface-strong);
+  color: #fff;
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+
+/* ---------- Main card ---------- */
+.container {
+  position: relative;
+  background: var(--surface);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 2.25rem;
+  width: 100%;
+  max-width: 640px;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.06) inset,
+    0 30px 60px -20px rgba(0, 0, 0, 0.7);
+}
+
+.tab-content {
+  width: 100%;
+  animation: slideUpFade 0.45s var(--ease);
+}
+
+/* ---------- Inputs ---------- */
+.input-group {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 1.75rem;
+}
+
+/* Post tab: two fields side by side, button full width underneath */
+.double-input {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.double-input input {
+  min-width: 0;
+}
+
+.double-input button {
+  grid-column: 1 / -1;
+}
+
+input {
+  flex: 1;
+  min-width: 0;
+  padding: 0.95rem 1.2rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
+  background: rgba(0, 0, 0, 0.35);
+  color: var(--text-main);
+  font-size: 1rem;
+  font-weight: 400;
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease;
+}
+
+input:hover {
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
+input:focus {
+  outline: none;
+  border-color: rgba(220, 39, 67, 0.65);
+  box-shadow: 0 0 0 4px rgba(220, 39, 67, 0.14);
+  background: rgba(0, 0, 0, 0.5);
+}
+
+input::placeholder {
+  color: rgba(255, 255, 255, 0.32);
+  font-weight: 300;
+}
+
+/* ---------- Buttons ---------- */
+button {
+  padding: 0.95rem 1.8rem;
+  border-radius: var(--radius-sm);
+  border: none;
+  background: var(--ig-gradient);
+  color: #fff;
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  box-shadow: 0 6px 20px -6px var(--accent-soft);
+  transition:
+    transform 0.25s var(--ease),
+    box-shadow 0.25s ease,
+    filter 0.25s ease;
+}
+
+button:hover:not(:disabled) {
+  background: var(--ig-gradient-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px -8px rgba(220, 39, 67, 0.55);
+}
+
+button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+button:disabled {
+  opacity: 0.65;
+  cursor: progress;
+  filter: saturate(0.6);
+}
+
+:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+
+input:focus-visible {
+  outline: none;
+}
+
+/* ---------- Profile ---------- */
+.profile-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  animation: scaleIn 0.5s var(--ease);
+}
+
+/* The one loud element: a gradient ring with glow */
+.profile-pic {
+  width: 132px;
+  height: 132px;
+  border-radius: 50%;
+  object-fit: cover;
+  padding: 4px;
+  background: var(--ig-gradient);
+  margin-bottom: 1.4rem;
+  box-shadow:
+    0 0 0 6px var(--bg-color),
+    0 0 0 7px var(--line),
+    0 18px 50px -8px rgba(220, 39, 67, 0.45);
+}
+
+.profile-name {
+  font-size: 1.7rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.03em;
+}
+
+.profile-bio {
+  color: var(--text-muted);
+  font-size: 1rem;
+  font-weight: 300;
+  margin-bottom: 1.75rem;
+  line-height: 1.6;
+  max-width: 44ch;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
+
+.profile-bio:empty {
+  display: none;
+}
+
+/* ---------- Stats (quiet: hairline dividers, no boxes) ---------- */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  width: 100%;
+  background: rgba(0, 0, 0, 0.28);
+  padding: 1.25rem 0.5rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--line);
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 0.5rem;
+}
+
+.stats-grid .stat-item + .stat-item,
+.post-stats-grid .stat-item + .stat-item {
+  border-left: 1px solid var(--line);
+}
+
+.stat-value {
+  font-size: 1.6rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-main);
+}
+
+.stat-label {
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: var(--text-muted);
+  margin-top: 0.25rem;
+}
+
+/* ---------- Post ---------- */
+.post-card.standalone {
+  margin-top: 0;
+  background: transparent;
+  border: none;
+  padding: 0;
+  box-shadow: none;
+  animation: scaleIn 0.5s var(--ease);
+}
+
+.post-media {
+  display: block;
+  width: 100%;
+  max-height: 460px;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  background: #000;
+  border: 1px solid var(--line);
+  box-shadow: 0 20px 40px -18px rgba(0, 0, 0, 0.8);
+}
+
+.post-caption {
+  font-size: 0.98rem;
+  font-weight: 300;
+  color: var(--text-main);
+  line-height: 1.65;
+  text-align: left;
+  margin: 1.4rem 0;
+  padding: 0 0.25rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+}
+
+.post-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  background: rgba(0, 0, 0, 0.28);
+  padding: 1.1rem 0.5rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--line);
+}
+
+.post-date {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  text-align: right;
+  margin-top: 0.9rem;
+  padding-right: 0.25rem;
+}
+
+/* ---------- Feedback ---------- */
+.error-msg {
+  color: #ffb4b4;
+  background: rgba(255, 59, 48, 0.08);
+  padding: 0.9rem 1.2rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(255, 59, 48, 0.22);
+  border-left: 3px solid #ff5a4d;
+  margin-bottom: 1.25rem;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  text-align: left;
+  animation: slideUpFade 0.3s var(--ease);
+}
+
+.loader {
+  width: 30px;
+  height: 30px;
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  border-top-color: #dc2743;
+  border-right-color: #f09433;
+  animation: spin 0.9s linear infinite;
+  margin: 2rem auto;
+}
+
+/* ---------- Animations ---------- */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUpFade {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 600px) {
+  body {
+    padding: 2rem 0.75rem 3rem;
+  }
+
+  .container {
+    padding: 1.4rem;
+    border-radius: 22px;
+  }
+
+  .input-group,
+  .double-input {
+    flex-direction: column;
+    grid-template-columns: 1fr;
+  }
+
+  .tab-btn {
+    padding: 0.6rem 1.1rem;
+    font-size: 0.9rem;
+  }
+
+  .stat-value {
+    font-size: 1.35rem;
+  }
+}
