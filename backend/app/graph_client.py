@@ -96,7 +96,7 @@ class GraphAPIClient:
                     raise
         return {}
 
-    def get_profile_metrics(self, username: str) -> dict[str, Any]:
+    def get_profile_stats(self, username: str) -> dict[str, Any]:
         url = f"{self.base_url}/{self.ig_business_id}"
         fields = f"business_discovery.username({username}){{username,followers_count,follows_count,media_count,biography,profile_picture_url}}"
 

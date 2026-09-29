@@ -9,6 +9,10 @@ logger = logging.getLogger(__name__)
 
 
 def refresh_long_lived_token():
+    """
+    Utility function to refresh the Meta Graph API long-lived token.
+    Can be run manually or set up as a cron job to prevent token expiration.
+    """
     load_dotenv()
 
     app_id = os.getenv("APP_ID")
@@ -33,13 +37,10 @@ def refresh_long_lived_token():
         expires_in = data.get("expires_in")
 
         logger.info(f"Successfully refreshed token. Expires in {expires_in} seconds.")
-        logger.info(f"New token: {new_token}")
 
         # In a real production system, save this to a Secrets Manager.
-        # For local dev, we just log it or suggest updating .env
-        print("\n=== NEW LONG LIVED TOKEN ===")
-        print(new_token)
-        print("============================\n")
+        # For local dev, you would typically write this back to the .env file.
+        # To avoid logging sensitive tokens, the token is not printed here.
 
     except requests.RequestException as e:
         logger.error(f"Failed to refresh token: {e}")

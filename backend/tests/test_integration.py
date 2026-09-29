@@ -2,7 +2,7 @@ import os
 
 import pytest
 
-from app.services.metrics_service import MetricsService
+from app.services.metrics_service import InstagramStatsService
 
 pytestmark = pytest.mark.skipif(
     os.getenv("RUN_LIVE_API_TESTS") != "1",
@@ -11,14 +11,14 @@ pytestmark = pytest.mark.skipif(
 
 
 def test_live_profile():
-    service = MetricsService()
+    service = InstagramStatsService()
     profile = service.get_profile("nike")
     assert profile["username"] == "nike"
     assert "followers_count" in profile
 
 
 def test_live_post():
-    service = MetricsService()
+    service = InstagramStatsService()
     recent_posts = service.client.get_recent_posts("nike", limit=1)
     if recent_posts:
         target_url = recent_posts[0]["permalink"]

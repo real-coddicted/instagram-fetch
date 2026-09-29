@@ -5,7 +5,7 @@ from app.config import ERROR_TTL, MEDIA_TTL, POST_TTL, PROFILE_TTL
 from app.graph_client import GraphAPIClient, GraphAPIError
 
 
-class MetricsService:
+class InstagramStatsService:
     def __init__(self) -> None:
         self.client = GraphAPIClient()
         self.profile_ttl = PROFILE_TTL
@@ -23,7 +23,7 @@ class MetricsService:
             return cached_data
 
         try:
-            data = self.client.get_profile_metrics(username)
+            data = self.client.get_profile_stats(username)
             cache.set(cache_key, data, self.profile_ttl)
             return data
         except GraphAPIError as e:

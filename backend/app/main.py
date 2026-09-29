@@ -4,8 +4,8 @@ from fastapi.responses import JSONResponse
 
 from app.config import ALLOWED_ORIGIN
 from app.graph_client import GraphAPIError
-from app.models.schemas import PostMetrics, ProfileMetrics
-from app.services.metrics_service import MetricsService
+from app.models.schemas import PostStats, ProfileStats
+from app.services.metrics_service import InstagramStatsService
 
 app = FastAPI(title="Instagram Metrics Fetcher - Tier 1")
 
@@ -18,8 +18,8 @@ app.add_middleware(
 )
 
 
-def get_metrics_service() -> MetricsService:
-    return MetricsService()
+def get_metrics_service() -> InstagramStatsService:
+    return InstagramStatsService()
 
 
 @app.exception_handler(Exception)
@@ -47,17 +47,17 @@ def health_check() -> dict:
     return {"status": "ok"}
 
 
-@app.get("/profile/{username}", response_model=ProfileMetrics)
+@app.get("/profile/{username}", response_model=ProfileStats)
 def get_profile(
-    username: str, service: MetricsService = Depends(get_metrics_service)  # noqa: B008
-) -> ProfileMetrics:
+    username: str, service: InstagramStatsService = Depends(get_metrics_service)  # noqa: B008
+) -> ProfileStats:
     data = service.get_profile(username)
-    return ProfileMetrics(**data)
+    return ProfileStats(**data)
 
 
-@app.get("/post", response_model=PostMetrics)
+@app.get("/post", response_model=PostStats)
 def get_post(
-    username: str, url: str, service: MetricsService = Depends(get_metrics_service)  # noqa: B008
-) -> PostMetrics:
+    username: str, url: str, service: InstagramStatsService = Depends(get_metrics_service)  # noqa: B008
+) -> PostStats:
     data = service.get_post(username, url)
-    return PostMetrics(**data)
+    return PostStats(**data)

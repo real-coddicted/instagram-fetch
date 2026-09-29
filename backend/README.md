@@ -32,7 +32,7 @@ LONG_LIVED_TOKEN=your_long_lived_token
 
 ### 3. Installation
 ```bash
-pip install -r requirements.txt
+uv pip install -r requirements.txt
 ```
 
 ### 4. Running the Server
