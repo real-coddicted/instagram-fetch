@@ -130,12 +130,23 @@ class GraphAPIClient:
     def find_post_by_permalink(
         self, username: str, post_url: str
     ) -> dict[str, Any] | None:
+        import re
+        
+        def extract_shortcode(url: str) -> str | None:
+            match = re.search(r'/(?:p|reel|tv)/([^/?#&]+)', url)
+            return match.group(1) if match else None
+
+        target_shortcode = extract_shortcode(post_url)
         posts = self.get_recent_posts(username, limit=50)
-        target_url = post_url.rstrip("/")
 
         for post in posts:
-            permalink = post.get("permalink", "").rstrip("/")
-            if permalink == target_url:
+            permalink = post.get("permalink", "")
+            post_shortcode = extract_shortcode(permalink)
+            
+            if target_shortcode and post_shortcode and target_shortcode == post_shortcode:
+                return post
+            # Fallback to direct match
+            elif permalink.rstrip("/") == post_url.rstrip("/"):
                 return post
 
         return None
