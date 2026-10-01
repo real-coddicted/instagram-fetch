@@ -1,6 +1,6 @@
-# Instagram Metrics Fetcher - Tier 1
+# Instagram Stats Fetcher - Tier 1
 
-A FastAPI backend that fetches public Business/Creator Instagram profile metrics and recent post metrics using only Meta's official Graph API `business_discovery` edge.
+A FastAPI backend that fetches public Business/Creator Instagram profile stats and recent post stats using only Meta's official Graph API `business_discovery` edge.
 
 ## Scope & Limitations (Tier 1)
 
@@ -42,7 +42,7 @@ uvicorn app.main:app --reload --port 8001
 
 ## Example Requests
 
-**Profile Metrics Lookup**
+**Profile Stats Lookup**
 ```http
 GET /profile/nike
 ```
@@ -57,7 +57,7 @@ GET /profile/nike
 }
 ```
 
-**Single Post Metrics Lookup**
+**Single Post Stats Lookup**
 ```http
 GET /post?username=nike&url=https://www.instagram.com/p/CxyZ1/
 ```
