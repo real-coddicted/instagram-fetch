@@ -2,7 +2,7 @@ import os
 
 import pytest
 
-from app.services.metrics_service import InstagramStatsService
+from app.services.stats_service import InstagramStatsService
 
 pytestmark = pytest.mark.skipif(
     os.getenv("RUN_LIVE_API_TESTS") != "1",

@@ -13,7 +13,7 @@ def test_health_check():
     assert response.json() == {"status": "ok"}
 
 
-@patch("app.services.metrics_service.GraphAPIClient.get_profile_metrics")
+@patch("app.services.stats_service.GraphAPIClient.get_profile_stats")
 def test_get_profile_endpoint(mock_get_profile):
     mock_get_profile.return_value = {
         "username": "nike",
@@ -31,7 +31,7 @@ def test_get_profile_endpoint(mock_get_profile):
     assert data["followers_count"] == 1000
 
 
-@patch("app.services.metrics_service.GraphAPIClient.find_post_by_permalink")
+@patch("app.services.stats_service.GraphAPIClient.find_post_by_permalink")
 def test_get_post_endpoint(mock_find_post):
     mock_find_post.return_value = {
         "caption": "New drop!",

@@ -10,7 +10,7 @@ def client():
 
 
 @responses.activate
-def test_get_profile_metrics_success(client):
+def test_get_profile_stats_success(client):
     mock_response = {
         "business_discovery": {
             "username": "nike",
@@ -26,7 +26,7 @@ def test_get_profile_metrics_success(client):
         responses.GET, f"{client.base_url}/12345", json=mock_response, status=200
     )
 
-    data = client.get_profile_metrics("nike")
+    data = client.get_profile_stats("nike")
     assert data["username"] == "nike"
     assert data["followers_count"] == 1000
 
@@ -86,6 +86,11 @@ def test_find_post_by_permalink(client):
     post = client.find_post_by_permalink("nike", "https://www.instagram.com/p/999")
     assert post is None
 
+    # Test tracking params match
+    post = client.find_post_by_permalink("nike", "https://www.instagram.com/p/123/?igsh=abcdef")
+    assert post is not None
+    assert post["like_count"] == 10
+
 
 @responses.activate
 def test_oauth_exception(client):
@@ -101,7 +106,7 @@ def test_oauth_exception(client):
     )
 
     with pytest.raises(GraphAPIError) as exc:
-        client.get_profile_metrics("nike")
+        client.get_profile_stats("nike")
     assert exc.value.status_code == 400
     assert "OAuth/Auth Error" in exc.value.message
 
@@ -120,7 +125,7 @@ def test_graph_method_exception(client):
     )
 
     with pytest.raises(GraphAPIError) as exc:
-        client.get_profile_metrics("personal_account")
+        client.get_profile_stats("personal_account")
     assert exc.value.status_code == 404
     assert "Account not eligible" in exc.value.message
 
@@ -139,7 +144,7 @@ def test_rate_limit_exception(client):
     )
 
     with pytest.raises(GraphAPIError) as exc:
-        client.get_profile_metrics("nike")
+        client.get_profile_stats("nike")
     assert exc.value.status_code == 429
     assert "Rate Limit Exceeded" in exc.value.message
 
@@ -155,7 +160,7 @@ def test_private_account(client):
     )
 
     with pytest.raises(GraphAPIError) as exc:
-        client.get_profile_metrics("private_account")
+        client.get_profile_stats("private_account")
     assert exc.value.status_code == 404
     assert "Account not publicly discoverable" in exc.value.message
 @responses.activate
@@ -165,7 +170,7 @@ def test_no_token_leak(client):
     )
 
     with pytest.raises(GraphAPIError) as exc:
-        client.get_profile_metrics("nike")
+        client.get_profile_stats("nike")
 
     assert "fake_token" not in str(exc.value)
     assert exc.value.status_code == 502
